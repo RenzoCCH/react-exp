@@ -1,0 +1,71 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render eExpenseList with expenses 1`] = `
+<div>
+  <h1>
+    Expense List
+  </h1>
+  <ExpenseListItem
+    amount={195}
+    createdAt={"1970-01-01T00:00:00.000Z"}
+    description="Gum"
+    id="1"
+    key="1"
+    note=""
+  />
+  <ExpenseListItem
+    amount={109500}
+    createdAt={"1969-12-28T00:00:00.000Z"}
+    description="Rent"
+    id="2"
+    key="2"
+    note=""
+  />
+  <ExpenseListItem
+    amount={4500}
+    createdAt={"1970-01-05T00:00:00.000Z"}
+    description="Credit Card"
+    id="3"
+    key="3"
+    note=""
+  />
+</div>
+`;
+
+exports[`should render expenseList with empty message 1`] = `
+<div>
+  <h1>
+    Expense List
+  </h1>
+  <p>
+     No expenses
+  </p>
+</div>
+`;
+
+exports[`should render expenseListItem 1`] = `
+<section>
+  <h3>
+    <Link
+      replace={false}
+      to="/edit/1"
+    >
+      Gum
+    </Link>
+  </h3>
+  <p>
+    <strong>
+      Amount:
+    </strong>
+    <span>
+      195
+    </span>
+  </p>
+  <p>
+    <strong>
+      Created at:
+    </strong>
+    <span />
+  </p>
+</section>
+`;
