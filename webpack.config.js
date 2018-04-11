@@ -1,15 +1,17 @@
 const path = require('path');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
-//console.log(path.resolve(__dirname,'public/scripts'));
-module.exports = {
-  //entry:'./src/playground/hoc.js',
-  entry:'./src/app.js',
-  output: {
-    path: path.resolve(__dirname,'public'),
-    filename: 'bundle.js'
-  },
-  module:{
-    rules:[{
+module.exports = env => {
+  const isProduction = env == 'production';
+  const CSSExtract = new ExtractTextPlugin("styles.css");
+  return {
+    entry:'./src/app.js',
+    output: {
+      path: path.resolve(__dirname,'public'),
+      filename: 'bundle.js'
+    },
+    module:{
+      rules:[{
         use:{
           loader:'babel-loader',
           //loader:'eslint-loader'
@@ -17,20 +19,38 @@ module.exports = {
         test:/\.js$/,
         exclude:/node_modules/
       },
-      {
-        test: /\.s?css$/,
-        use: [
-          'style-loader',
-          'css-loader',
-          'sass-loader'
-        ]
-      }
-    ]
-  },
-  devtool:'cheap-module-eval-source-map',
-  devServer: {
-    contentBase: path.resolve(__dirname,'public'),
-    port: 9000,
-    historyApiFallback:true
-  }
+        {
+          test: /\.s?css$/,
+          use: CSSExtract.extract({
+            use: [
+              {
+                loader: 'css-loader',
+                options:{
+                  sourceMap:true
+                }
+              },
+              {
+                loader:'sass-loader',
+                options:{
+                  sourceMap:true
+                }
+              }
+
+            ]
+          })
+        }
+      ]
+    },
+    plugins: [
+      CSSExtract
+    ],
+    devtool: isProduction ? 'source-map' : 'inline-source-map',
+    devServer: {
+      contentBase: path.resolve(__dirname,'public'),
+      port: 9000,
+      historyApiFallback:true
+    }
+  };
 };
+
+

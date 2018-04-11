@@ -5,9 +5,9 @@ import { BrowserRouter,Route,Switch,Link,NavLink} from 'react-router-dom';
 import AppRouter from './routers/AppRouter.js';
 
 import configureStore from './store/configureStore.js';
-import {addExpense,removeExpense,editExpense} from './actions/expenses.js';
+import {addExpense, removeExpense, editExpense } from './actions/expenses.js';
 import {setTextFilter,sortByDate,sortByAmount,setStartDate,setEndDate} from './actions/filters.js';
-import getVisibleExpenses from './selectors/expenses.js'
+import getVisibleExpenses from './selectors/expenses.js';
 
 import 'normalize.css/normalize.css';
 import './styles/styles.scss';
