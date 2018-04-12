@@ -12,3 +12,8 @@ node_modules/
 .idea/**/sqlDataSources.xml
 .idea/**/dynamic.xml
 .idea/**/uiDesigner.xml
+
+public/bundle.js
+public/bundle.js.map
+public/styles.css
+public/styles.css.map
