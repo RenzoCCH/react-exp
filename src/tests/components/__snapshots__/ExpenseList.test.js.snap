@@ -58,14 +58,16 @@ exports[`should render expenseListItem 1`] = `
       Amount:
     </strong>
     <span>
-      195
+      $1.95
     </span>
   </p>
   <p>
     <strong>
       Created at:
     </strong>
-    <span />
+    <span>
+      December 31st, 1969
+    </span>
   </p>
 </section>
 `;
