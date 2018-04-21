@@ -23,12 +23,14 @@ exports[`should render ExpenseListFilters  with alt data correctly 1`] = `
   </select>
   <withStyles(DateRangePicker)
     anchorDirection="left"
+    appendToBody={false}
     block={false}
     calendarInfoPosition="bottom"
     customArrowIcon={null}
     customCloseIcon={null}
     customInputIcon={null}
     daySize={39}
+    disableScroll={false}
     disabled={false}
     displayFormat={[Function]}
     enableOutsideDays={false}
@@ -139,12 +141,14 @@ exports[`should render ExpenseListFilters correctly 1`] = `
   </select>
   <withStyles(DateRangePicker)
     anchorDirection="left"
+    appendToBody={false}
     block={false}
     calendarInfoPosition="bottom"
     customArrowIcon={null}
     customCloseIcon={null}
     customInputIcon={null}
     daySize={39}
+    disableScroll={false}
     disabled={false}
     displayFormat={[Function]}
     enableOutsideDays={false}
