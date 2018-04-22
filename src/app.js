@@ -1,8 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
-import { BrowserRouter, Route, Switch, Link, NavLink } from "react-router-dom";
 import AppRouter from "./routers/AppRouter.js";
+import { startSetExpenses } from "./actions/expenses";
 
 import configureStore from "./store/configureStore.js";
 import "normalize.css/normalize.css";
@@ -17,4 +17,9 @@ const jsx = (
     <AppRouter />
   </Provider>
 );
-ReactDOM.render(jsx, document.getElementById("app"));
+
+ReactDOM.render(<p>Loading...</p>, document.getElementById("app"));
+
+store.dispatch(startSetExpenses()).then(() => {
+  ReactDOM.render(jsx, document.getElementById("app"));
+});

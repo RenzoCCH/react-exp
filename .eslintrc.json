@@ -21,10 +21,7 @@
     ],
     "rules": {
         "prettier/prettier": "error",
-        "indent": [
-            "error",
-            2
-        ],
+        "indent": [2, 2, {"SwitchCase": 1}],
         "linebreak-style": 0,
 //        "quotes": [
 //            "error",
@@ -53,6 +50,8 @@
               "++": true
             }
           }],
-        "no-console": 0
+        "no-console": 0,
+        "react/jsx-uses-vars": "error",
+        "react/jsx-uses-react": "error"
     }
 }

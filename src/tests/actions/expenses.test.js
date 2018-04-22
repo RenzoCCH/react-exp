@@ -4,15 +4,35 @@ import {
   startAddExpense,
   addExpense,
   editExpense,
-  removeExpense
+  removeExpense,
+  setExpenses,
+  startSetExpenses
 } from "../../actions/expenses";
 import expenses from "../fixtures/expenses";
 import database from "../../firebase/firebase";
+import moment from 'moment';
 
 const createMockStore = configureMockStore([thunk]);
 
+beforeEach(done => {
+  const expensesData = {};
+  expenses.forEach(({id, description, note, amount, createdAt}) => {
+    expensesData[id] = {
+      description,
+      note,
+      amount,
+      createdAt: createdAt.unix()
+    };
+  });
+  database
+    .ref("expenses")
+    .set(expensesData)
+    .then(() => done())
+    .catch(() => console.log("couldn't set firebase"));
+});
+
 test("Should setup remove expnses action object", () => {
-  const action = removeExpense({ id: "123abc" });
+  const action = removeExpense({id: "123abc"});
   expect(action).toEqual({
     type: "REMOVE_EXPENSE",
     id: "123abc"
@@ -20,9 +40,9 @@ test("Should setup remove expnses action object", () => {
 });
 
 test("set up edis expense", () => {
-  const action = editExpense({ note: "New note value" });
+  const action = editExpense({note: "New note value"});
   expect(action).toEqual({
-    expense: { note: "New note value" },
+    expense: {note: "New note value"},
     type: "EDIT_EXPENSE"
   });
 });
@@ -91,16 +111,26 @@ test("should add expenses with defaults to databse and store", done => {
     });
 });
 
-// test('test should setup add expense action object with default values', () => {
-//   const action = addExpense();
-//   expect(action).toEqual({
-//     type:'ADD_EXPENSE',
-//     expense:{
-//       id: expect.any(String),
-//       description: undefined,
-//       note: undefined,
-//       amount: 0,
-//       createdAt: 0
-//     }
-//   });
-// });
+test("should set up SET EXPENSE action with data", () => {
+  const action = setExpenses(expenses);
+  expect(action).toEqual({
+    type: "SET_EXPENSES",
+    expenses
+  });
+});
+
+test("should fetch the expenses form firebase", done => {
+  const store = createMockStore({});
+  const expensesFormat = expenses.map(exp => ({
+    ...exp,
+    createdAt: moment(exp.createdAt).unix()
+  }));
+  store.dispatch(startSetExpenses()).then(() => {
+    const actions = store.getActions();
+    expect(actions[0]).toEqual({
+      type: "SET_EXPENSES",
+      expenses: expensesFormat
+    });
+    done();
+  });
+});
