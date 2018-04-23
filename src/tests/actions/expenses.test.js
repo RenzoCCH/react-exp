@@ -6,17 +6,18 @@ import {
   editExpense,
   removeExpense,
   setExpenses,
-  startSetExpenses
+  startSetExpenses,
+  startRemoveExpense
 } from "../../actions/expenses";
 import expenses from "../fixtures/expenses";
 import database from "../../firebase/firebase";
-import moment from 'moment';
+import moment from "moment";
 
 const createMockStore = configureMockStore([thunk]);
 
 beforeEach(done => {
   const expensesData = {};
-  expenses.forEach(({id, description, note, amount, createdAt}) => {
+  expenses.forEach(({ id, description, note, amount, createdAt }) => {
     expensesData[id] = {
       description,
       note,
@@ -32,17 +33,35 @@ beforeEach(done => {
 });
 
 test("Should setup remove expnses action object", () => {
-  const action = removeExpense({id: "123abc"});
+  const action = removeExpense({ id: "123abc" });
   expect(action).toEqual({
     type: "REMOVE_EXPENSE",
     id: "123abc"
   });
 });
 
+test("should remove expenses from firebase", done => {
+  const store = createMockStore({});
+  store
+    .dispatch(startRemoveExpense(expenses[0]))
+    .then(() => {
+      const actions = store.getActions();
+      expect(actions[0]).toEqual({
+        type: "REMOVE_EXPENSE",
+        id: expenses[0].id
+      });
+      return database.ref(`expenses/${expenses[0].id}`).once("value");
+    })
+    .then(snapshot => {
+      expect(snapshot.val()).toBeFalsy();
+      done();
+    });
+});
+
 test("set up edis expense", () => {
-  const action = editExpense({note: "New note value"});
+  const action = editExpense({ note: "New note value" });
   expect(action).toEqual({
-    expense: {note: "New note value"},
+    expense: { note: "New note value" },
     type: "EDIT_EXPENSE"
   });
 });
@@ -134,3 +153,4 @@ test("should fetch the expenses form firebase", done => {
     done();
   });
 });
+
