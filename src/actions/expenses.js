@@ -25,7 +25,7 @@ export const startAddExpense = (expenseData = {}) => {
       createdAt = 0
     } = expenseData;
 
-    const expense = {description, note, amount, createdAt};
+    const expense = { description, note, amount, createdAt };
     return database
       .ref("expenses")
       .push(expense)
@@ -62,6 +62,23 @@ export const editExpense = expense => ({
   type: "EDIT_EXPENSE",
   expense
 });
+
+export const startEditExpense = expense => {
+  const expenseData = {
+    amount: expense.amount,
+    createdAt: expense.createdAt,
+    description: expense.description,
+    note: expense.note
+  };
+  return dispatch => {
+    return database
+      .ref(`expenses/${expense.id}`)
+      .update(expenseData)
+      .then(() => {
+        dispatch(editExpense(expense));
+      });
+  };
+};
 
 //SET_EXPENSES
 export const setExpenses = expenses => ({
