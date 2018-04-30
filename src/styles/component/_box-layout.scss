@@ -1,0 +1,23 @@
+.box-layout {
+  background:
+          linear-gradient(135deg, #708090 22px, #d9ecff 22px, #d9ecff 24px, transparent 24px, transparent 67px, #d9ecff 67px, #d9ecff 69px, transparent 69px),
+          linear-gradient(225deg, #708090 22px, #d9ecff 22px, #d9ecff 24px, transparent 24px, transparent 67px, #d9ecff 67px, #d9ecff 69px, transparent 69px)0 64px;
+  background-color:#708090;
+  background-size: 64px 128px;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.box-layout__box {
+  background: fade-out(white, .15);
+  border-radius: 3px;
+  padding: $l-size $m-size;
+  text-align: center;
+  width: 25rem;
+}
+.box-layout__title {
+  margin: 0 0 $m-size 0;
+  line-height: 1;
+}
